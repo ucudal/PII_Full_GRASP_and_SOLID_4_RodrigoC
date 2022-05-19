@@ -9,15 +9,33 @@ using System.Collections.Generic;
 
 namespace Full_GRASP_And_SOLID
 {
+    /// <summary>
+    /// Clase modficada aplicando el patrón Creator, ya que Recipe contiene y agrega instancias de 
+    /// Step, Recipe debería tener la responsabilidad de crear dichas instancias.
+    /// </summary>
     public class Recipe
     {
         private IList<Step> steps = new List<Step>();
 
         public Product FinalProduct { get; set; }
 
-        public void AddStep(Step step)
+        /// <summary>
+        /// El método AddStep es modificado para aplicar el patrón creator, 
+        /// ahora es capaz de crear un step ya que recibe como argumento todos los datos 
+        /// necesarios para crear instancias de Step, y a su vez agrega los objetos 
+        /// recién creados a la lista de steps. Con lo cual es menos probable que existan 
+        /// instancias de Step que no pertenezcan a alguna instancia de Recipe. 
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="quantity"></param>
+        /// <param name="equipment"></param>
+        /// <param name="time"></param>
+        /// <returns></returns>
+        public Step AddStep(Product input, double quantity, Equipment equipment, int time)
         {
+            Step step = new Step(input, quantity, equipment, time);
             this.steps.Add(step);
+            return step;
         }
 
         public void RemoveStep(Step step)
